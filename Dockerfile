@@ -7,5 +7,10 @@ LABEL version="0.1.0"
 LABEL repository="https://fireresq036/auto-release-Milestone"
 LABEL maintainer="Mark Russell"
 
+RUN apt-get update && apt-get indtall -y jq
+RUN dotnet tool -g GitReleaseManager.Tool
+
+ENV PATH /root/.dotnet/tools:$PATH
+
 COPY entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
