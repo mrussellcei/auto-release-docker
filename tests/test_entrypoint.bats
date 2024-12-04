@@ -3,9 +3,15 @@ setup() {
     export GITHUB_EVENT_PATH=$(mktemp /tmp/github_event_file.json.XXXXX)
     cat << EOF > $GITHUB_EVENT_PATH
 {
-    "action": "closed",
-    "milestone": {
-        "title" : "milestone 1"
+    "action": "opened",
+    "number": 2,
+    "pull_request": {
+        "title" : "PR 1",
+        "created_at": "2384792374",
+        "body": "# Title\nThis is paragraph",
+        "user": {
+            "name": "Sam Smith"
+        }
     }
 }
 EOF
@@ -37,7 +43,7 @@ EOF
 
 }
 
-@test "Exits with zero when the event type is not milestone" {
+@test "Exits with zero when the event type is not pull_request" {
     export GITHUB_EVENT_NAME='tag'
     run entrypoint.sh "4758127478"
     assert_output "::debug::The event name is 'tag' action skipping processing"
@@ -45,11 +51,11 @@ EOF
 }
 
 @test "Exits with zero processed properly" {
-    export GITHUB_EVENT_NAME='milestone'
+    export GITHUB_EVENT_NAME='pull_request'
     export GITHUB_REPOSITORY='mrussell/test_repo'
 
     run entrypoint.sh "4758127478" 1
-    assert_output --partial 'https://dummy.com'
+    assert_output --partial 'user: Sam Smith'
     [ "$status" -eq 0 ]
 }
 

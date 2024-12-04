@@ -6,8 +6,16 @@ inputs:
     description: 'The GITHUB_TOKEN uesd to authenticate the repository'
     required: true
 outputs:
-  release-url:
-    description: 'The URL of the GitHub release that was drafted'
+  pr-number:
+    description: 'the number of the PR'
+  pr-title:
+    description: 'the title of the PR'
+  pr-created-at:
+    description: 'the stamp the PR was created at'
+  pr-owner:
+    description: 'the user creating the PR'
+  pr-body:
+    description: 'the body of the PR'
 runs:
   using: docker
   image: 'Dockerfile'
