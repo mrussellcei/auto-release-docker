@@ -19,7 +19,10 @@ jobs:
         shell: bash
         env:
           BATS_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
-        run: bats tests
+        run: |
+          ls -l /usr/lib
+          env | sort
+          bats tests
       - name: Create a release draft for a milestone
         id: create-release-draft
         uses: ./

@@ -1,10 +1,3 @@
-_tests_helper() {
-    export BATS_LIB_PATH=${BATS_LIB_PATH:-"/usr/lib"}
-    bats_load_library bats-support
-    bats_load_library bats-assert
-    bats_load_library bats-file
-    bats_load_library bats-detik/detik.bash
-}
 
 setup() {
     export GITHUB_EVENT_PATH=$(mktemp /tmp/github_event_file.json.XXXXX)
@@ -16,10 +9,12 @@ setup() {
     }
 }
 EOF
+    export BATS_LIB_PATH=${BATS_LIB_PATH:-"/usr/lib"}
+    bats_load_library bats-support
+    bats_load_library bats-assert
+    bats_load_library bats-file
+
     export GITHUB_OUTPUT=$(mktemp /tmp/github_output_file.bash.XXXXX)
-    echo "${BATS_LIB_PATH}"
-    load "${BATS_LIB_PATH}/bats-support/load"
-    load "${BATS_LIB_PATH}/bats-assert/load"
 
     # get the containing directory of this file
     # use $BATS_TEST_FILENAME instead of ${BASH_SOURCE[0]} or $0,
