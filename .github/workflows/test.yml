@@ -3,8 +3,9 @@ on:
   push:
     branches:
       - main
-  milestone:
-    types: [closed]
+  pull_request: 
+    branches: 
+      - main
 jobs:
   test:
     name: test
@@ -22,14 +23,14 @@ jobs:
           BATS_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
         run: |
           bats tests
-      - name: Create a release draft for a milestone
-        id: create-release-draft
+      - name: process PR
+        id: process-pr
         uses: ./
         with: 
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Print the RUL of the release draft
-        if: steps.create-release-draft.outputs.release-url != ''
+      - name: Print Information from the PR
+        if: steps.process-pr.outputs.pr-number != ''
         run: |
-          echo ${{ steps.create-release-draft.outputs.release-url }}
+          echo ${{ steps.process-pr.outputs.pr-number }}
           echo "# Release URL" >> $GITHUB_STEP_SUMMARY
-          echo ${{ steps.create-release-draft.outputs.release-url }} >> $GITHUB_STEP_SUMMARY
+          echo ${{ steps.process-pr.outputs.pr-number }} >> $GITHUB_STEP_SUMMARY
