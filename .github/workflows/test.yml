@@ -18,7 +18,7 @@ jobs:
       - name: Test entrypoint.sh
         shell: bash
         env:
-          BAST_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
+          BATS_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
         run: bats tests
       - name: Create a release draft for a milestone
         id: create-release-draft
