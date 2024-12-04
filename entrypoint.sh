@@ -3,6 +3,6 @@
 set -euo pipefail
 
 echo "::debug::Seting the release URL"
-echo "::set-output name=release-url::http://example.com"
+echo "release-url=http://example.com" >> $GITHUB_OUTPUT
 
 exit 0
